@@ -1,0 +1,16 @@
+{
+  "name": "fault-tree-analyzer",
+  "version": "1.0.0",
+  "description": "设备停机原因分析：故障树最小割集（最小基础故障组合）计算工具",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

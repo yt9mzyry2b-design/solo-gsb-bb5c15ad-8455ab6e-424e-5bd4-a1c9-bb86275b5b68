@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>设备停机原因分析 · 故障树最小割集</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>设备停机原因分析</h1>
+    <p class="subtitle">录入基础故障与逻辑门（AND / OR），计算导致顶层故障的最小基础故障组合（最小割集）</p>
+  </header>
+
+  <main>
+    <section class="card" id="basics-card">
+      <h2>1. 基础故障 <span class="hint" id="basics-count"></span></h2>
+      <div class="row">
+        <input id="basic-input" type="text" placeholder="例如：轴承磨损" maxlength="40" />
+        <button id="add-basic" type="button">添加</button>
+      </div>
+      <ul id="basic-list" class="tag-list"></ul>
+    </section>
+
+    <section class="card" id="gates-card">
+      <h2>2. 逻辑门 <span class="hint">引用基础故障或其他门</span></h2>
+      <div class="row gate-form">
+        <input id="gate-name" type="text" placeholder="门名称，例如：液压失效" maxlength="40" />
+        <select id="gate-type">
+          <option value="AND">AND（全部发生才发生）</option>
+          <option value="OR">OR（任一发生即发生）</option>
+        </select>
+      </div>
+      <div class="refs-picker">
+        <div class="refs-title">选择该门的输入（引用）：</div>
+        <div id="refs-options" class="refs-options"><em>请先添加基础故障或门</em></div>
+      </div>
+      <button id="add-gate" type="button">添加门</button>
+      <ul id="gate-list" class="gate-list"></ul>
+    </section>
+
+    <section class="card" id="top-card">
+      <h2>3. 顶层故障</h2>
+      <div class="row">
+        <select id="top-select"><option value="">— 请选择顶层故障 —</option></select>
+        <button id="analyze-btn" type="button" class="primary">开始分析</button>
+        <button id="example-btn" type="button">载入示例</button>
+        <button id="reset-btn" type="button">清空</button>
+      </div>
+    </section>
+
+    <section class="card" id="result-card" hidden>
+      <h2>分析结果</h2>
+      <div id="error-box" class="error" hidden></div>
+      <div id="result-body" hidden>
+        <p id="result-summary"></p>
+        <table>
+          <thead>
+            <tr><th>#</th><th>组合（故障数）</th><th>涉及的基础故障</th></tr>
+          </thead>
+          <tbody id="result-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>AND 门合并子组合 · OR 门汇总子组合 · 每步去重并删除超集</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
